@@ -1,6 +1,6 @@
 <?php
 include_once '../Model/domeneModell.php';
-include_once '../Model/databaseStub.php';
+include_once '../DAL/bankDatabaseStub.php';
 include_once '../BLL/bankLogikk.php';
 
 class hentTransaksjonerTest extends PHPUnit_Framework_TestCase {
