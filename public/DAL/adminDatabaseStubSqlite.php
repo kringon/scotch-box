@@ -1,6 +1,6 @@
 <?php
 include_once '../Model/domeneModell.php';
-class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
+class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
 {
     protected $pdo = null;
     private $db;

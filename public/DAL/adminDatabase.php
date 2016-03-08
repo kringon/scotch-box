@@ -1,6 +1,6 @@
 <?php
 include_once '../Model/domeneModell.php';
-class DB
+class adminDB
 {
     private $db;
     function __construct()

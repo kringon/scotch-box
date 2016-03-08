@@ -13,7 +13,7 @@ class hentAlleKunderTest extends PHPUnit_Framework_TestCase
 
     public function testHentAlleKunder(){
         //Arrange
-        $admin = new Admin(new DBStubSqlite());
+        $admin = new Admin(new adminDBStubSqlite());
         //Act
         $kunder = $admin->hentAlleKunder();
         //Assert

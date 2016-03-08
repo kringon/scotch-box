@@ -8,7 +8,7 @@ class Admin
     {
         if($innDb==null)
         {
-            $this->db=new DB(); 
+            $this->db=new adminDB();
         }
         else
         {
