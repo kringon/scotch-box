@@ -20,12 +20,11 @@ class hentKontiTest extends PHPUnit_Framework_TestCase
         $kontonummer = '22334412345';
         $bank = new Bank(new DBStub());
         $konti = $bank->hentKonti($personnummer);
-
+        $this->assertCount(1, $konti);
         foreach ($konti as $konto) {
             $this->assertObjectHasAttribute("kontonummer", $konto);
             $this->assertEquals("22334412345", $konto->kontonummer);
         }
-        $this->assertCount(1, $konti);
     }
 
     public function testIngenKontoer()
@@ -50,18 +49,8 @@ class hentKontiTest extends PHPUnit_Framework_TestCase
 
         //konto1
         $this->assertEquals('105010123456', $konti[0]->kontonummer);
-        $this->assertEquals('01010110523', $konti[0]->personnummer);
-        $this->assertEquals(720, $konti[0]->saldo);
-        $this->assertEquals('Lønnskonto', $konti[0]->type);
-        $this->assertEquals('NOK', $konti[0]->valuta);
-
         //konto2
         $this->assertEquals('105020123456', $konti[1]->kontonummer);
-        $this->assertEquals('01010110523', $konti[1]->personnummer);
-        $this->assertEquals(100500, $konti[1]->saldo);
-        $this->assertEquals('Sparekonto', $konti[1]->type);
-        $this->assertEquals('NOK', $konti[1]->valuta);
-
     }
 
 }

@@ -21,6 +21,36 @@ class DBStub
         $konto1 = new konto();
         $konto1->kontonummer = '105010123456';
         $konto1->personnummer = '01010110523';
+
+
+        //Lage konto2
+        $konto2 = new konto();
+        $konto2->kontonummer = '105020123456';
+        $konto2->personnummer = '01010110523';
+
+
+        //Lage konto3
+        $konto3 = new konto();
+        $konto3->kontonummer = '22334412345';
+        $konto3->personnummer = '12345678901';
+
+
+        $konti = array($konto1, $konto2, $konto3);
+        $valgteKonti=array();
+        foreach($konti as $konto){
+            if($konto->personnummer == $personnummer)
+                array_push($valgteKonti,$konto);
+        }
+        return $valgteKonti;
+
+
+    }
+
+    function hentSaldi($personnummer){
+        //Lage konto1
+        $konto1 = new konto();
+        $konto1->kontonummer = '105010123456';
+        $konto1->personnummer = '01010110523';
         $konto1->saldo = 720;
         $konto1->type = 'Lønnskonto';
         $konto1->valuta = 'NOK';
@@ -42,14 +72,13 @@ class DBStub
         $konto3->valuta = 'NOK';
 
         $konti = array($konto1, $konto2, $konto3);
+
         $valgteKonti=array();
         foreach($konti as $konto){
             if($konto->personnummer == $personnummer)
                 array_push($valgteKonti,$konto);
         }
         return $valgteKonti;
-
-
     }
 
     function hentEnKunde($personnummer)

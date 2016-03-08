@@ -28,6 +28,11 @@
         public $melding;
         public $avventer;
     }
+    class postSted
+    {
+        public $Postnr;
+        public $Poststed;
+    }
     
   
 

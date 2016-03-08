@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <database name="bank">
+        <table_data name="Konto">
+            <row>
+                <field name="Kontonummer">105010123456</field>
+                <field name="Personnummer">01010110523</field>
+                <field name="Saldo">720</field>
+                <field name="Type">Lønnskonto</field>
+                <field name="Valuta">NOK</field>
+            </row>
+            <row>
+                <field name="Kontonummer">105020123456</field>
+                <field name="Personnummer">01010110523</field>
+                <field name="Saldo">100500</field>
+                <field name="Type">Sparekonto</field>
+                <field name="Valuta">NOK</field>
+            </row>
+            <row>
+                <field name="Kontonummer">22334412345</field>
+                <field name="Personnummer">01010110523</field>
+                <field name="Saldo">10234.5</field>
+                <field name="Type">Brukskonto</field>
+                <field name="Valuta">NOK</field>
+            </row>
+            <row>
+                <field name="Kontonummer">234567</field>
+                <field name="Personnummer">11223344556</field>
+                <field name="Saldo">600673</field>
+                <field name="Type">Brukskonto</field>
+                <field name="Valuta">NOK</field>
+            </row>
+            <row>
+                <field name="Kontonummer">55551166677</field>
+                <field name="Personnummer">11223344556</field>
+                <field name="Saldo">987654</field>
+                <field name="Type">Sparekonto</field>
+                <field name="Valuta">NOK</field>
+            </row>
+        </table_data>
+        <table_data name="Kunde">
+            <row>
+                <field name="Personnummer">01010110523</field>
+                <field name="Fornavn">Lene</field>
+                <field name="Etternavn">Jensen</field>
+                <field name="Adresse">Askerveien 22</field>
+                <field name="Postnr">3270</field>
+                <field name="Telefonnr">22224444</field>
+                <field name="Passord">01010110523</field>
+            </row>
+            <row>
+                <field name="Personnummer">09048433711</field>
+                <field name="Fornavn">Jørgen</field>
+                <field name="Etternavn">Skår Fischer</field>
+                <field name="Adresse">Rødslia 6</field>
+                <field name="Postnr">3222</field>
+                <field name="Telefonnr">91391469</field>
+                <field name="Passord">09048433711</field>
+            </row>
+            <row>
+                <field name="Personnummer">12345678901</field>
+                <field name="Fornavn">Per</field>
+                <field name="Etternavn">Hansen</field>
+                <field name="Adresse">Osloveien 82</field>
+                <field name="Postnr">1234</field>
+                <field name="Telefonnr">12345678</field>
+                <field name="Passord">12345678901</field>
+            </row>
+        </table_data>
+        <table_data name="Poststed">
+            <row>
+                <field name="Postnr">1386</field>
+                <field name="Poststed">Asker</field>
+            </row>
+            <row>
+                <field name="Postnr">3270</field>
+                <field name="Poststed">Asker</field>
+            </row>
+            <row>
+                <field name="Postnr">3222</field>
+                <field name="Poststed">Sandefjord</field>
+
+            </row>
+        </table_data>
+        <table_data name="Transaksjon">
+            <row>
+                <field name="TxID">1</field>
+                <field name="FraTilKontonummer">20102012345</field>
+                <field name="Belop">-100.5</field>
+                <field name="Dato">2015-03-15</field>
+                <field name="Melding">Meny Storo</field>
+                <field name="Kontonummer">105010123456</field>
+                <field name="Avventer">0</field>
+            </row>
+            <row>
+                <field name="TxID">2</field>
+                <field name="FraTilKontonummer">20102012345</field>
+                <field name="Belop">400.4</field>
+                <field name="Dato">2015-03-20</field>
+                <field name="Melding">Innebtaling</field>
+                <field name="Kontonummer">105010123456</field>
+                <field name="Avventer">0</field>
+            </row>
+            <row>
+                <field name="TxID">3</field>
+                <field name="FraTilKontonummer">20102012345</field>
+                <field name="Belop">-1400.7</field>
+                <field name="Dato">2015-03-13</field>
+                <field name="Melding">Husleie</field>
+                <field name="Kontonummer">55551166677</field>
+                <field name="Avventer">1</field>
+            </row>
+            <row>
+                <field name="TxID">4</field>
+                <field name="FraTilKontonummer">20102012347</field>
+                <field name="Belop">-5000.5</field>
+                <field name="Dato">2015-03-30</field>
+                <field name="Melding">Skatt</field>
+                <field name="Kontonummer">105010123456</field>
+                <field name="Avventer">0</field>
+            </row>
+            <row>
+                <field name="TxID">5</field>
+                <field name="FraTilKontonummer">20102012345</field>
+                <field name="Belop">345.56</field>
+                <field name="Dato">2015-03-13</field>
+                <field name="Melding">Test</field>
+                <field name="Kontonummer">55551166677</field>
+                <field name="Avventer">0</field>
+            </row>
+            <row>
+                <field name="TxID">6</field>
+                <field name="FraTilKontonummer">12312345</field>
+                <field name="Belop">1234</field>
+                <field name="Dato">2012-12-12</field>
+                <field name="Melding">Melding</field>
+                <field name="Kontonummer">234567</field>
+                <field name="Avventer">1</field>
+            </row>
+            <row>
+                <field name="TxID">7</field>
+                <field name="FraTilKontonummer">345678908</field>
+                <field name="Belop">3000</field>
+                <field name="Dato">2012-12-12</field>
+                <field name="Melding"></field>
+                <field name="Kontonummer">105010123456</field>
+                <field name="Avventer">0</field>
+            </row>
+            <row>
+                <field name="TxID">8</field>
+                <field name="FraTilKontonummer">234534678</field>
+                <field name="Belop">15</field>
+                <field name="Dato">2012-12-12</field>
+                <field name="Melding">Hei</field>
+                <field name="Kontonummer">105010123456</field>
+                <field name="Avventer">0</field>
+            </row>
+            <row>
+                <field name="TxID">9</field>
+                <field name="FraTilKontonummer">1234254365</field>
+                <field name="Belop">125</field>
+                <field name="Dato">2012-12-12</field>
+                <field name="Melding">Hopp</field>
+                <field name="Kontonummer">105010123456</field>
+                <field name="Avventer">0</field>
+            </row>
+            <row>
+                <field name="TxID">10</field>
+                <field name="FraTilKontonummer">20102012345</field>
+                <field name="Belop">24000</field>
+                <field name="Dato">2012-12-12</field>
+                <field name="Melding">Betaling til lånehai</field>
+                <field name="Kontonummer">105010123456</field>
+                <field name="Avventer">1</field>
+            </row>
+            <row>
+                <field name="TxID">11</field>
+                <field name="FraTilKontonummer">12312345</field>
+                <field name="Belop">99.99</field>
+                <field name="Dato">2012-12-11</field>
+                <field name="Melding">Avgift på smørbrød til lucifer selv</field>
+                <field name="Kontonummer">234567</field>
+                <field name="Avventer">1</field>
+            </row>
+            <row>
+                <field name="TxID">12</field>
+                <field name="FraTilKontonummer">0123457</field>
+                <field name="Belop">100001.01</field>
+                <field name="Dato">2014-12-11</field>
+                <field name="Melding">En ugyldig betaling</field>
+                <field name="Kontonummer">123987</field>
+                <field name="Avventer">1</field>
+            </row>
+        </table_data>
+    </database>
+</mysqldump>
