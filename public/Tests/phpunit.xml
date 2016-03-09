@@ -37,7 +37,6 @@
             <directory>../Model</directory>
             <file>../DAL/bankDatabaseStub.php</file>
             <file>../DAL/bankDatabaseStubSqlite.php</file>
-            <file>../DAL/adminDatabaseStub.php</file>
             <file>../DAL/adminDatabaseStubSqlite.php</file>
         </whitelist>
 
