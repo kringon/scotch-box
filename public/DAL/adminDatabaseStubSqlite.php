@@ -1,5 +1,6 @@
 <?php
 include_once '../Model/domeneModell.php';
+
 class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
 {
     protected $pdo = null;
@@ -42,38 +43,43 @@ class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         }
         return $this->createDefaultDBConnection($this->pdo, '../bank.db');
     }
-    
+
     function hentAlleKunder()
     {
         $sql = "Select * from Kunde Left Join Poststed On Kunde.postnr = Poststed.postnr ";
         $resultat = $this->db->query($sql);
         $kunder = array();
-        while($rad = $resultat->fetchObject())
-        {
-            $kunder[]=$rad;
+        while ($rad = $resultat->fetchObject()) {
+            $kunder[] = $rad;
         }
         return $kunder;
     }
-    
+
     function endreKundeInfo($kunde)
     {
-        $this->db->autocommit(false);
+        $this->db->beginTransaction();
         // Sjekk om nytt postnr ligger i Poststeds-tabellen, dersom ikke legg det inn
         $sql = "Select * from Poststed Where Postnr = '$kunde->postnr'";
         $resultat = $this->db->query($sql);
-        if($this->db->affected_rows!=1)
-        {
-            // ligger ikke i poststedstabellen 
+        $resultat->setFetchMode(PDO::FETCH_INTO, new kunde());
+        $rad = $resultat->fetchObject();
+
+        if (empty($rad) || count($rad) != 1) {
+            // ligger ikke i poststedstabellen
             $sql = "Insert Into Poststed (Postnr, Poststed) Values ('$kunde->postnr','$kunde->poststed')";
             $resultat = $this->db->query($sql);
-            if($this->db->affected_rows < 1)
-            {
+            $resultat->setFetchMode(PDO::FETCH_INTO, new postSted());
+            $rad = $resultat->fetchObject();
+
+            //@codeCoverageIgnoreStart
+            if (count($rad) < 1) {
                 $this->db->rollback();
                 return "Feil";
             }
+            //@codeCoverageIgnoreEnd
         }
         // oppdater Kunde-tabellen
-        $sql =  "Update Kunde Set Fornavn = '$kunde->fornavn', Etternavn = '$kunde->etternavn',";
+        $sql = "Update Kunde Set Fornavn = '$kunde->fornavn', Etternavn = '$kunde->etternavn',";
         $sql .= " Adresse = '$kunde->adresse', Postnr = '$kunde->postnr',";
         $sql .= " Telefonnr = '$kunde->telefonnr', Passord ='$kunde->passord'";
         $sql .= " Where Personnummer = '$kunde->personnummer'";
@@ -81,123 +87,154 @@ class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         $this->db->commit();
         return "OK";
     }
-    
+
     function registrerKunde($kunde)
     {
-        $this->db->autocommit(false);
+        $this->db->beginTransaction();
         // Sjekk om nytt postnr ligger i Poststeds-tabellen, dersom ikke legg det inn
         $sql = "Select * from Poststed Where Postnr = '$kunde->postnr'";
         $resultat = $this->db->query($sql);
-        if($this->db->affected_rows!=1)
-        {
-            // ligger ikke i poststedstabellen 
-            $sql = "Insert Into Poststed (Postnr, Poststed) Values ('$kunde->postnr','$kunde->poststed')";
-            $resultat = $this->db->query($sql);
-            if($this->db->affected_rows < 1)
-            {
+        $resultat->setFetchMode(PDO::FETCH_INTO, new postSted());
+        $rad = $resultat->fetchObject();
+
+        if (empty($rad) || count($rad != 1)) {
+
+            // ligger ikke i poststedstabellen
+            $query = $this->db->prepare("Insert Into Poststed (Postnr, Poststed) Values (?,?)");
+            $query->execute(array($kunde->postnr, $kunde->poststed));
+            $resultat = $query->rowCount();
+
+            if ($resultat < 1) {
+                //@codeCoverageIgnoreStart
                 $this->db->rollback();
                 return "Feil";
+                //@codeCoverageIgnoreEnd
             }
+
         }
-        
-        $sql = "Insert into Kunde (Personnummer,Fornavn,Etternavn,Adresse,Postnr,Telefonnr,Passord)";
-        $sql .= "Values ('$kunde->personnummer','$kunde->fornavn','$kunde->etternavn',"
-                . "'$kunde->adresse','$kunde->postnr','$kunde->telefonnr','$kunde->passord')";
-        $resultat = $this->db->query($sql);
-        if($this->db->affected_rows==1)
-        {
+        $query = $this->db->prepare("Insert into Kunde (Personnummer,Fornavn,Etternavn,Adresse,Postnr,Telefonnr,Passord) Values (?,?,?,?,?,?,?)");
+        $query->execute(array($kunde->personnummer, $kunde->fornavn, $kunde->etternavn, $kunde->adresse, $kunde->postnr, $kunde->telefonnr, $kunde->passord));
+        $resultat = $query->rowCount();
+        if ($resultat == 1) {
             $this->db->commit();
             return "OK";
-        }
-        else
-        {
+        } else {
+            //@codeCoverageIgnoreStart
             $this->db->rollback();
             return "Feil";
+            //@codeCoverageIgnoreEnd
         }
     }
-    
+
     function slettKunde($personnummer)
     {
-        $sql = "Delete From Kunde Where Personnummer = '$personnummer'";
-        $resultat = $this->db->query($sql);
-        if($this->db->affected_rows==1)
-        {
+        $query = $this->db->prepare("Delete From Kunde Where Personnummer = '$personnummer'");
+        $query->execute();
+        $resultat = $query->rowCount();
+
+        if ($resultat== 1) {
             return "OK";
-        }
-        else
-        {
+        } else {
             return "Feil";
-        }    
+        }
     }
-    
+
     function registerKonto($konto)
     {
         $sql = "Select * from Kunde Where Personnummer = '$konto->personnummer'";
         $resultat = $this->db->query($sql);
-        if($this->db->affected_rows!=1)
-        {
-            echo json_encode("Feil i personnummer");
-            die();
-        }
-        $sql = "Insert into Konto (Personnummer, Kontonummer, Saldo, Type, Valuta)";
-        $sql .= "Values ('$konto->personnummer','$konto->kontonummer','$konto->saldo',"
-                . "'$konto->type','$konto->valuta')";
-        $resultat = $this->db->query($sql);
-        if($this->db->affected_rows==1)
-        {
-            return "OK";
-        }
-        else
-        {
+        $resultat->setFetchMode(PDO::FETCH_INTO, new kunde());
+        $rad = $resultat->fetchObject();
+
+        if (empty($rad) || count($rad) != 1) {
             return "Feil";
-        } 
+        }
+        $query = $this->db->prepare("Insert into Konto (Personnummer, Kontonummer, Saldo, Type, Valuta) Values (?,?,?,?,?)");
+        $query->execute(array($konto->personnummer,$konto->kontonummer,$konto->saldo,$konto->type,$konto->valuta));
+        $resultat = $query->rowCount();
+        if ($resultat == 1) {
+            return "OK";
+            //@codeCoverageIgnoreStart
+        } else {
+            return "Feil";
+        }
+        //@codeCoverageIgnoreEnd
     }
-    
+
     function endreKonto($konto)
     {
         $sql = "Select * from Kunde Where Personnummer = '$konto->personnummer'";
         $resultat = $this->db->query($sql);
-        if($this->db->affected_rows!=1)
-        {
+        if ($this->db->affected_rows != 1) {
             echo json_encode("Feil i personnummer");
             die();
         }
         $sql = "Select * from Konto Where Kontonummer = '$konto->kontonummer'";
         $resultat = $this->db->query($sql);
-        if($this->db->affected_rows!=1)
-        {
+        if ($this->db->affected_rows != 1) {
             echo json_encode("Feil i kontonummer");
             die();
-        } 
-        
-        $sql =  "Update Konto Set Personnummer = '$konto->personnummer', "
-                . "Kontonummer = '$konto->kontonummer', Type = '$konto->type', "
-                . "Saldo = '$konto->saldo', Valuta = '$konto->valuta' "
-                . "Where Kontonummer = '$konto->kontonummer'";
+        }
+
+        $sql = "Update Konto Set Personnummer = '$konto->personnummer', "
+            . "Kontonummer = '$konto->kontonummer', Type = '$konto->type', "
+            . "Saldo = '$konto->saldo', Valuta = '$konto->valuta' "
+            . "Where Kontonummer = '$konto->kontonummer'";
         $resultat = $this->db->query($sql);
         return "OK";
     }
-    
+
     function hentAlleKonti()
     {
         $sql = "Select * from Konto";
         $resultat = $this->db->query($sql);
-        $konti=array();
-        while($rad = $resultat->fetch_object())
-        {
-            $konti[]=$rad;
+        $konti = array();
+        while ($rad = $resultat->fetch_object()) {
+            $konti[] = $rad;
         }
         return $konti;
     }
+
     function slettKonto($kontonummer)
     {
         $sql = "Delete from Konto Where Kontonummer = '$kontonummer'";
         $resultat = $this->db->query($sql);
-        if($this->db->affected_rows!=1)
-        {
+        if ($this->db->affected_rows != 1) {
             echo json_encode("Feil kontonummer");
             die();
         }
         return "OK";
+    }
+
+    function hentKundeInfo($personnummer)
+    {
+        $kunde = new kunde();
+        $sql = "Select * from Kunde Where Personnummer = '$personnummer'";
+        $resultat = $this->db->query($sql);
+        $resultat->setFetchMode(PDO::FETCH_INTO, new kunde());
+        $rad = $resultat->fetchObject();
+        if (empty($rad) || count($rad) != 1) {
+            return "Feil";
+        }
+
+        if (!empty($rad)) {
+            $kunde->personnummer = $rad->Personnummer;
+            $kunde->fornavn = $rad->Fornavn;
+            $kunde->etternavn = $rad->Etternavn;
+            $kunde->adresse = $rad->Adresse;
+            $kunde->telefonnr = $rad->Telefonnr;
+            $kunde->passord = $rad->Passord;
+            $kunde->postnr = $rad->Postnr;
+        }
+
+        $sql = "Select Poststed from Poststed Where Postnr = '$kunde->postnr'";
+        $resultat = $this->db->query($sql);
+        $resultat->setFetchMode(PDO::FETCH_INTO, new postSted());
+        $rad = $resultat->fetchObject();
+        if (empty($rad) || count($rad) != 1) {
+            return "Feil";
+        }
+        $kunde->poststed = $rad->Poststed;
+        return $kunde;
     }
 }

@@ -3,7 +3,11 @@ include_once '../DAL/adminDatabase.php';
 //include_once '../DAL/adminDatabaseStub.php';
 class Admin
 {
+
     private $db;
+    /**
+     * @codeCoverageIgnore
+     */
     function __construct($innDb=null)
     {
         if($innDb==null)
@@ -20,6 +24,12 @@ class Admin
     {
         $kunder= $this->db->hentAlleKunder();
         return $kunder;
+    }
+
+    function hentKundeInfo($personnummer)
+    {
+        $kunde= $this->db->hentKundeInfo($personnummer);
+        return $kunde;
     }
     
     function endreKundeInfo($kunde)

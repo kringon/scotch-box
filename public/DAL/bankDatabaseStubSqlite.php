@@ -165,7 +165,6 @@ class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         $resultat->setFetchMode(PDO::FETCH_INTO, new transaksjon());
         $rad = $resultat->fetchObject();
         if (empty($rad) || count($rad) != 1) {
-            echo "jeg er her";
             $feil = true;
         }
 

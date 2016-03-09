@@ -9,6 +9,10 @@
         public $poststed; 
         public $telefonnr;
         public $passord;
+
+        public function testFornavn(){
+            $this->fornavn = "Jørgen";
+        }
     }
     class konto
     {

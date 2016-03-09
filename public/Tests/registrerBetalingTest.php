@@ -1,5 +1,4 @@
 <?php
-
 include_once '../Model/domeneModell.php';
 include_once '../DAL/bankDatabaseStubSqlite.php';
 include_once '../BLL/bankLogikk.php';

@@ -4,6 +4,10 @@ include_once '../DAL/bankDatabase.php';
 class Bank
 {
     private $db;
+
+    /**
+     * @codeCoverageIgnore
+     */
     function __construct($innDb=null)
     {
         if($innDb==null)
