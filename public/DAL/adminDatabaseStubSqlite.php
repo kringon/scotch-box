@@ -132,7 +132,7 @@ class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         $query->execute();
         $resultat = $query->rowCount();
 
-        if ($resultat== 1) {
+        if ($resultat == 1) {
             return "OK";
         } else {
             return "Feil";
@@ -150,7 +150,7 @@ class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
             return "Feil";
         }
         $query = $this->db->prepare("Insert into Konto (Personnummer, Kontonummer, Saldo, Type, Valuta) Values (?,?,?,?,?)");
-        $query->execute(array($konto->personnummer,$konto->kontonummer,$konto->saldo,$konto->type,$konto->valuta));
+        $query->execute(array($konto->personnummer, $konto->kontonummer, $konto->saldo, $konto->type, $konto->valuta));
         $resultat = $query->rowCount();
         if ($resultat == 1) {
             return "OK";
@@ -165,16 +165,22 @@ class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
     {
         $sql = "Select * from Kunde Where Personnummer = '$konto->personnummer'";
         $resultat = $this->db->query($sql);
-        if ($this->db->affected_rows != 1) {
+        $resultat->setFetchMode(PDO::FETCH_INTO, new kunde());
+        $rad = $resultat->fetchObject();
+
+        if (empty($rad) || count($rad) != 1) {
             echo json_encode("Feil i personnummer");
-            die();
-        }
+            return "Feil";
+        }//@codeCoverageIgnore
+
         $sql = "Select * from Konto Where Kontonummer = '$konto->kontonummer'";
         $resultat = $this->db->query($sql);
-        if ($this->db->affected_rows != 1) {
+        $resultat->setFetchMode(PDO::FETCH_INTO, new konto());
+        $rad = $resultat->fetchObject();
+        if (empty($rad) || count($rad) != 1) {
             echo json_encode("Feil i kontonummer");
-            die();
-        }
+            return "Feil";
+        }//@codeCoverageIgnore
 
         $sql = "Update Konto Set Personnummer = '$konto->personnummer', "
             . "Kontonummer = '$konto->kontonummer', Type = '$konto->type', "
@@ -182,26 +188,30 @@ class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
             . "Where Kontonummer = '$konto->kontonummer'";
         $resultat = $this->db->query($sql);
         return "OK";
-    }
+    }//@codeCoverageIgnore
 
     function hentAlleKonti()
     {
         $sql = "Select * from Konto";
         $resultat = $this->db->query($sql);
-        $konti = array();
-        while ($rad = $resultat->fetch_object()) {
-            $konti[] = $rad;
-        }
+
+        $sql = "Select * from Konto";
+        $resultat = $this->db->query($sql);
+        $resultat->setFetchMode(PDO::FETCH_INTO, new konto());
+        $konti = $resultat->fetchAll();
+
         return $konti;
     }
 
     function slettKonto($kontonummer)
     {
-        $sql = "Delete from Konto Where Kontonummer = '$kontonummer'";
-        $resultat = $this->db->query($sql);
-        if ($this->db->affected_rows != 1) {
+        $query = $this->db->prepare("Delete from Konto Where Kontonummer = '$kontonummer'");
+        $query->execute();
+        $resultat = $query->rowCount();
+
+        if ($resultat != 1) {
             echo json_encode("Feil kontonummer");
-            die();
+            return "Feil";
         }
         return "OK";
     }
@@ -232,7 +242,7 @@ class adminDBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         $resultat->setFetchMode(PDO::FETCH_INTO, new postSted());
         $rad = $resultat->fetchObject();
         if (empty($rad) || count($rad) != 1) {
-            return "Feil";
+            return "Feil";//@codeCoverageIgnore
         }
         $kunde->poststed = $rad->Poststed;
         return $kunde;

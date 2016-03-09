@@ -18,11 +18,11 @@ class registrerKontoTest extends PHPUnit_Framework_TestCase
         //Arrange
         $admin = new Admin(new adminDBStubSqlite());
         $konto = new konto();
-        $konto->kontonummer="666777";
-        $konto->personnummer="09048433711";
-        $konto->saldo=1000666.99;
-        $konto->type="Momsunderdragelse";
-        $konto->valuta="DKK";
+        $konto->kontonummer = "666777";
+        $konto->personnummer = "09048433711";
+        $konto->saldo = 1000666.99;
+        $konto->type = "Momsunderdragelse";
+        $konto->valuta = "DKK";
         //Act
         $OK = $admin->registrerKonto($konto);
         //Assert
@@ -34,11 +34,11 @@ class registrerKontoTest extends PHPUnit_Framework_TestCase
         //Arrange
         $admin = new Admin(new adminDBStubSqlite());
         $konto = new konto();
-        $konto->kontonummer="666777";
-        $konto->personnummer="666887";
-        $konto->saldo=1000666.99;
-        $konto->type="Momsunderdragelse";
-        $konto->valuta="DKK";
+        $konto->kontonummer = "666777";
+        $konto->personnummer = "666887";
+        $konto->saldo = 1000666.99;
+        $konto->type = "Momsunderdragelse";
+        $konto->valuta = "DKK";
         //Act
         $OK = $admin->registrerKonto($konto);
         //Assert
@@ -58,9 +58,9 @@ class registrerKontoTest extends PHPUnit_Framework_TestCase
         $admin = new Admin(new adminDBStubSqlite());
         $konto = new konto();
 
-        $konto->personnummer="09048433711";
+        $konto->personnummer = "09048433711";
 
         //Act
         $OK = $admin->registrerKonto($konto);
-    }
+    }//@codeCoverageIgnore
 }

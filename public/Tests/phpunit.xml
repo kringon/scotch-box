@@ -30,12 +30,17 @@
 
     <filter>
 
+
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory>../Tests</directory>
             <directory>../BLL</directory>
             <directory>../Model</directory>
-            <directory>../DAL</directory>
+            <file>../DAL/bankDatabaseStub.php</file>
+            <file>../DAL/bankDatabaseStubSqlite.php</file>
+            <file>../DAL/adminDatabaseStub.php</file>
+            <file>../DAL/adminDatabaseStubSqlite.php</file>
         </whitelist>
+
     </filter>
     <logging>
         <log type="coverage-html" target="/var/www/public/test-report" lowUpperBound="35"

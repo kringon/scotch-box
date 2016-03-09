@@ -1,5 +1,5 @@
 <?php
-include_once '../DAL/adminDatabase.php';
+include_once '../DAL/adminDatabase.php';// @codeCoverageIgnore
 //include_once '../DAL/adminDatabaseStub.php';
 class Admin
 {

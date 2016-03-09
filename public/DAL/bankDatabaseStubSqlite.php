@@ -97,27 +97,6 @@ class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         }
     }
 
-    function hentKonti($personnummer)
-    {
-        $sql = "Select Distinct Kontonummer from Konto Where Personnummer ='$personnummer'";
-        $resultat = $this->db->query($sql);
-        $konti = array();
-        while ($rad = $resultat->fetch(PDO::FETCH_ASSOC)) {
-            $konti[] = $rad;
-        }
-        return $konti;
-    }
-
-    function hentSaldi($personnummer)
-    {
-        $sql = "Select Distinct * from Konto Where Personnummer ='$personnummer'";
-        $resultat = $this->db->query($sql);
-        $saldi = array();
-        while ($rad = $resultat->fetch(PDO::FETCH_ASSOC)) {
-            $saldi[] = $rad;
-        }
-        return $saldi;
-    }
 
     function registrerBetaling($kontoNr, $transaksjon)
     {
@@ -131,7 +110,7 @@ class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         if ($resultat->rowCount() == 1) {
             return "OK";
         } else {
-            return "Feil";
+            return "Feil";//@codeCoverageIgnore
         }
     }
 
@@ -203,7 +182,7 @@ class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
                     $this->db->commit();
                     return "OK";
                 }
-            }
+            }//@codeCoverageIgnore
         }
         $this->db->rollback();
         return "Feil";
@@ -215,15 +194,22 @@ class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         // Sjekk om nytt postnr ligger i Poststeds-tabellen, dersom ikke legg det inn
         $sql = "Select * from Poststed Where Postnr = '$kunde->postnr'";
         $resultat = $this->db->query($sql);
+        $resultat->setFetchMode(PDO::FETCH_INTO, new kunde());
+        $rad = $resultat->fetchObject();
 
-        if ($resultat->rowCount() != 1) {
-            // ligger ikke i poststedstabellen 
+        if (empty($rad) || count($rad) != 1) {
+            // ligger ikke i poststedstabellen
             $sql = "Insert Into Poststed (Postnr, Poststed) Values ('$kunde->postnr','$kunde->poststed')";
             $resultat = $this->db->query($sql);
-            if ($this->db->affected_rows < 1) {
+            $resultat->setFetchMode(PDO::FETCH_INTO, new postSted());
+            $rad = $resultat->fetchObject();
+
+            //@codeCoverageIgnoreStart
+            if (count($rad) < 1) {
                 $this->db->rollback();
                 return "Feil";
             }
+            //@codeCoverageIgnoreEnd
         }
         // oppdater Kunde-tabellen
         $sql = "Update Kunde Set Fornavn = '$kunde->fornavn', Etternavn = '$kunde->etternavn',";
@@ -235,45 +221,7 @@ class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         return "OK";
     }
 
-    function registrerKunde($kunde)
-    {
-        $this->db->autocommit(false);
-        // Sjekk om nytt postnr ligger i Poststeds-tabellen, dersom ikke legg det inn
-        $sql = "Select * from Poststed Where Postnr = '$kunde->postnr'";
-        $resultat = $this->db->query($sql);
-        if ($this->db->affected_rows != 1) {
-            // ligger ikke i poststedstabellen 
-            $sql = "Insert Into Poststed (Postnr, Poststed) Values ('$kunde->postnr','$kunde->poststed')";
-            $resultat = $this->db->query($sql);
-            if ($this->db->affected_rows < 1) {
-                $this->db->rollback();
-                return "Feil";
-            }
-        }
 
-        $sql = "INSERT INTO Kunde (Personnummer,Fornavn,Etternavn,Adresse,Postnr,Telefonnr,Passord)"
-            . "Values ('$kunde->personnummer','$kunde->fornavn','$kunde->etternavn',"
-            . "'$kunde->adresse','$kunde->postnr','$kunde->telefonnr','$kunde->passord')";
-        $resultat = $this->db->query($sql);
-        if ($this->db->affected_rows == 1) {
-            $this->db->commit();
-            return "OK";
-        } else {
-            $this->db->rollback();
-            return "Feil";
-        }
-    }
-
-    function slettKunde($personnummer)
-    {
-        $sql = "Delete From Kunde Where Personnummer = '$personnummer'";
-        $resultat = $this->db->query($sql);
-        if ($this->db->affected_rows == 1) {
-            return "OK";
-        } else {
-            return "Feil";
-        }
-    }
 
     function hentKundeInfo($personnummer)
     {
@@ -302,7 +250,7 @@ class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
         $resultat->setFetchMode(PDO::FETCH_INTO, new postSted());
         $rad = $resultat->fetchObject();
         if (empty($rad) || count($rad) != 1) {
-            return "Feil";
+            return "Feil";// @codeCoverageIgnore
         }
         $kunde->poststed = $rad->Poststed;
         return $kunde;

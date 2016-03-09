@@ -3,17 +3,6 @@ include_once '../Model/domeneModell.php';
 
 class DBStub
 {
-    function sjekkLoggInn($personnummer, $passord)
-    {
-        $riktigPersonnummer = "01010122344";
-        $riktigPassord = "123456";
-
-        if ($personnummer == $riktigPersonnummer && $riktigPassord == $passord) {
-            return "OK";
-        } else {
-            return "Feil";
-        }
-    }
 
     function hentKonti($personnummer)
     {
