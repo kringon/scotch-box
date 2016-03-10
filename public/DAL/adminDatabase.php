@@ -5,7 +5,7 @@ class adminDB
     private $db;
     function __construct()
     {
-        $this->db=new mysqli("localhost","root","","bank");
+        $this->db=new mysqli("localhost","root","root","bank");
         $this->db->set_charset("utf8");
     }
     
