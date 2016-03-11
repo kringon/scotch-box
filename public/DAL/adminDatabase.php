@@ -50,6 +50,7 @@ class adminDB
     
     function registrerKunde($kunde)
     {
+        print_r($kunde);
         $this->db->autocommit(false);
         // Sjekk om nytt postnr ligger i Poststeds-tabellen, dersom ikke legg det inn
         $sql = "Select * from Poststed Where Postnr = '$kunde->postnr'";
@@ -62,7 +63,7 @@ class adminDB
             if($this->db->affected_rows < 1)
             {
                 $this->db->rollback();
-                return "Feil";
+                return "FeilPostnr";
             }
         }
         
@@ -78,7 +79,7 @@ class adminDB
         else
         {
             $this->db->rollback();
-            return "Feil";
+            return "FeilDatabase";
         }
     }
     
