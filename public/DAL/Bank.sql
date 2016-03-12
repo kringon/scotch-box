@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS `Kunde` (
 
 INSERT INTO `Kunde` (`Personnummer`, `Fornavn`, `Etternavn`, `Adresse`, `Postnr`, `Telefonnr`, `Passord`) VALUES
 ('01010110523', 'Lene', 'Jensen', 'Askerveien 22', '3270', '22224444', 'Hei'),
-('12345678901', 'Per', 'Hansen', 'Osloveien 82', '1234', '12345678', 'Hei');
+('12345678901', 'Per', 'Hansen', 'Osloveien 82', '1234', '12345678', 'Hei'),
+  ('98765432198', 'Test', 'Testesen', 'Osloveien 82', '1234', '12345678', '98765432198');
 
 -- --------------------------------------------------------
 
