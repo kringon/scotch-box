@@ -127,6 +127,7 @@ class DB
         // hent Belop og Kontonummer fra Transaksjonenen
         $sql = "Select Belop, Kontonummer from Transaksjon where TxID ='".$TxID."'";
         $resultat = $this->db->query($sql);
+
         if($this->db->affected_rows!=1)
         {
             $feil = true;
@@ -145,17 +146,19 @@ class DB
         $rad = $resultat->fetch_object();
         $gammelSaldo = $rad->Saldo;
         $nySaldo = $gammelSaldo - $belop;
-        
         if(!$feil)
         {
+
             // sett "Avventer" på TXiD til 0
             $sql = "Update Transaksjon Set Avventer = '0' Where TxID = '$TxID'";
             $resultat = $this->db->query($sql);
             if($this->db->affected_rows==1)
             {
+
                 // oppdater Saldo på Konto
                 $sql = "Update Konto Set Saldo = ".$nySaldo." Where kontonummer = '$kontonummer'";
                 $resultat = $this->db->query($sql);
+
                 if($this->db->affected_rows==1)
                 {
                     $this->db->commit();
@@ -246,8 +249,10 @@ class DB
         $kunde = new kunde();
         $sql = "Select * from Kunde Where Personnummer = '$personnummer'";
         $resultat = $this->db->query($sql);
+
         if($this->db->affected_rows!=1)
         {
+
             return "Feil";
         }
         
