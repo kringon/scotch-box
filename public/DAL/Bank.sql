@@ -1,7 +1,7 @@
 
 
 --
--- Database: `Bank` DENNE MÃ… VÃ†RE OPPRETTET FÃ˜R SCRIPTET KJÃ˜RES !!!
+-- Database: `Bank` DENNE MÅ VÆRE OPPRETTET FØR SCRIPTET KJØRES !!!
 --
 
 -- --------------------------------------------------------
@@ -17,14 +17,14 @@ CREATE TABLE IF NOT EXISTS `Konto` (
   `Type` varchar(20) NOT NULL,
   `Valuta` varchar(3) NOT NULL,
   PRIMARY KEY (`Kontonummer`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dataark for tabell `Konto`
 --
 
 INSERT INTO `Konto` (`Kontonummer`, `Personnummer`, `Saldo`, `Type`, `Valuta`) VALUES
-('105010123456', '01010110523', 720, 'LÃ¸nnskonto', 'NOK'),
+('105010123456', '01010110523', 720, 'Lønnskonto', 'NOK'),
 ('105020123456', '01010110523', 100500, 'Sparekonto', 'NOK'),
 ('22334412345', '01010110523', 10234.5, 'Brukskonto', 'NOK');
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `Kunde` (
   `Telefonnr` varchar(8) NOT NULL,
   `Passord` varchar(500) NOT NULL,
   PRIMARY KEY (`Personnummer`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dataark for tabell `Kunde`
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `Poststed` (
   `Postnr` varchar(4) NOT NULL,
   `Poststed` varchar(30) NOT NULL,
   PRIMARY KEY (`Postnr`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dataark for tabell `Poststed`
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `Transaksjon` (
   `Kontonummer` varchar(20) NOT NULL,
   `Avventer` tinyint(1) NOT NULL,
   PRIMARY KEY (`TxID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dataark for tabell `Transaksjon`
