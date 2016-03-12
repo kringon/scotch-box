@@ -1,22 +1,21 @@
 <?php
 
-$foo = true;
-
-$DB = new mysqli("localhost", "root", "root", "bank");
-
-    if ($db->connect_error) {
-
-        $foo = false;
-    }
-
-$file = file_get_contents('DAL/bank.sql');
-
-$query = $DB->multi_query($file);
-
-$DB->close();
-
-if (!$query)
+try {
+    $con=mysqli_connect("localhost","root","root","bank");
+    $sql = file_get_contents('DAL/Bank.sql');
+    if (mysqli_connect_errno())
     {
-        print ('Error');
+        echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
-?>
+    if ($result = mysqli_multi_query($con,$sql)){
+
+        if (count($result) == 1) {
+            echo json_encode("OK");
+        }else{
+            echo json_encode("Feil ved databasereset");
+        }
+    }
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}

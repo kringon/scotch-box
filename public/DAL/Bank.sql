@@ -9,7 +9,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Tabellstruktur for tabell `Konto`
 --
-
+DROP TABLE Konto;
 CREATE TABLE IF NOT EXISTS `Konto` (
   `Kontonummer` varchar(20) NOT NULL,
   `Personnummer` varchar(11) NOT NULL,
@@ -33,7 +33,7 @@ INSERT INTO `Konto` (`Kontonummer`, `Personnummer`, `Saldo`, `Type`, `Valuta`) V
 --
 -- Tabellstruktur for tabell `Kunde`
 --
-
+DROP TABLE Kunde;
 CREATE TABLE IF NOT EXISTS `Kunde` (
   `Personnummer` varchar(11) NOT NULL,
   `Fornavn` varchar(30) NOT NULL,
@@ -58,7 +58,7 @@ INSERT INTO `Kunde` (`Personnummer`, `Fornavn`, `Etternavn`, `Adresse`, `Postnr`
 --
 -- Tabellstruktur for tabell `Poststed`
 --
-
+DROP TABLE `Poststed`;
 CREATE TABLE IF NOT EXISTS `Poststed` (
   `Postnr` varchar(4) NOT NULL,
   `Poststed` varchar(30) NOT NULL,
@@ -78,7 +78,7 @@ INSERT INTO `Poststed` (`Postnr`, `Poststed`) VALUES
 --
 -- Tabellstruktur for tabell `Transaksjon`
 --
-
+DROP TABLE `Transaksjon`;
 CREATE TABLE IF NOT EXISTS `Transaksjon` (
   `TxID` int(11) NOT NULL AUTO_INCREMENT,
   `FraTilKontonummer` varchar(20) NOT NULL,
