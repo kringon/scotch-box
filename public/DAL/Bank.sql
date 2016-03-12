@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS `Konto` (
 INSERT INTO `Konto` (`Kontonummer`, `Personnummer`, `Saldo`, `Type`, `Valuta`) VALUES
 ('105010123456', '01010110523', 720, 'Lønnskonto', 'NOK'),
 ('105020123456', '01010110523', 100500, 'Sparekonto', 'NOK'),
-('22334412345', '01010110523', 10234.5, 'Brukskonto', 'NOK');
+('22334412345', '01010110523', 10234.5, 'Brukskonto', 'NOK'),
+  ('12345678912','98765432198',10658,'Brukskonto','NOK');
 
 -- --------------------------------------------------------
 
@@ -79,7 +80,7 @@ INSERT INTO `Poststed` (`Postnr`, `Poststed`) VALUES
 --
 -- Tabellstruktur for tabell `Transaksjon`
 --
-DROP TABLE `Transaksjon`;
+DROP TABLE Transaksjon;
 CREATE TABLE IF NOT EXISTS `Transaksjon` (
   `TxID` int(11) NOT NULL AUTO_INCREMENT,
   `FraTilKontonummer` varchar(20) NOT NULL,
@@ -104,4 +105,5 @@ INSERT INTO `Transaksjon` (`TxID`, `FraTilKontonummer`, `Belop`, `Dato`, `Meldin
 (6, '12312345', 1234, '2012-12-12', 'Melding', '234567', 1),
 (7, '345678908', 3000, '2012-12-12', '', '105010123456', 0),
 (8, '234534678', 15, '2012-12-12', 'Hei', '105010123456', 0),
-(9, '1234254365', 125, '2012-12-12', 'Hopp', '105010123456', 0);
+(9, '1234254365', 125, '2012-12-12', 'Hopp', '105010123456', 0),
+  (10, '45645645687', 125, '2012-12-12', 'TestBetaling', '12345678912', 1);
