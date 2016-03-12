@@ -50,7 +50,6 @@ class adminDB
     
     function registrerKunde($kunde)
     {
-        print_r($kunde);
         $this->db->autocommit(false);
         // Sjekk om nytt postnr ligger i Poststeds-tabellen, dersom ikke legg det inn
         $sql = "Select * from Poststed Where Postnr = '$kunde->postnr'";
