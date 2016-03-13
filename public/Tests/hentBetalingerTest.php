@@ -1,5 +1,4 @@
 <?php
-
 include_once '../Model/domeneModell.php';
 include_once '../DAL/bankDatabaseStubSqlite.php';
 include_once '../BLL/bankLogikk.php';
@@ -17,7 +16,6 @@ class hentBetalingerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($betalinger));
         $this->assertEmpty($betalinger);
     }
-
     public function testHentEnBetaling(){
         //Arrange
         $bank = new Bank(new DBStubSqlite());
@@ -67,6 +65,4 @@ class hentBetalingerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("55551166677",$betalinger[2]->Kontonummer);
         $this->assertEquals("1",$betalinger[2]->Avventer);
     }
-
-
 }

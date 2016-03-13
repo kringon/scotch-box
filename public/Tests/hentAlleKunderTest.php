@@ -4,7 +4,7 @@ include_once '../DAL/adminDatabaseStubSqlite.php';
 include_once '../BLL/adminLogikk.php';
 /**
  * Created by PhpStorm.
- * User: T820082
+ * User: S163472
  * Date: 09.03.2016
  * Time: 00:17
  */

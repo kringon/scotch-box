@@ -6,19 +6,16 @@ include_once '../BLL/adminLogikk.php';
 
 /**
  * Created by PhpStorm.
- * User: T820082
+ * User: S163472
  * Date: 09.03.2016
  * Time: 00:17
  */
 class endreKundeInfoTest extends PHPUnit_Framework_TestCase
 {
-
     public function testEndreGyldigKundeEttFelt()
     {
         //Arrange
         $admin = new Admin(new adminDBStubSqlite());
-
-
         $kunde = new kunde();
         $kunde->personnummer = "01010110523";
         $kunde->fornavn = "Lene";
@@ -28,7 +25,6 @@ class endreKundeInfoTest extends PHPUnit_Framework_TestCase
         $kunde->poststed = "Asker";
         $kunde->telefonnr = "22224444";
         $kunde->passord = "01010110523";
-
         //Act
         $kunde->etternavn = "Olsen";
         $OK = $admin->endreKundeInfo($kunde);
@@ -64,8 +60,6 @@ class endreKundeInfoTest extends PHPUnit_Framework_TestCase
     {
         //Arrange
         $admin = new Admin(new adminDBStubSqlite());
-
-
         $kunde = new kunde();
         $kunde->personnummer = "11122233312";
         $kunde->fornavn = "Ugyldig";
@@ -75,7 +69,6 @@ class endreKundeInfoTest extends PHPUnit_Framework_TestCase
         $kunde->poststed = "Asker";
         $kunde->telefonnr = "22224444";
         $kunde->passord = "11122233312";
-
         //Act
         $OK = $admin->hentKundeInfo($kunde->personnummer);
         $this->assertEquals("Feil", $OK);
@@ -83,12 +76,9 @@ class endreKundeInfoTest extends PHPUnit_Framework_TestCase
         $oppdatertKunde->fornavn = "Lina";
         $oppdatertKunde->etternavn = "Jonvik";
         $oppdatertKunde->adresse = "Slaskebakken 22";
-
         $OK = $admin->endreKundeInfo($oppdatertKunde);
         $this->assertEquals("OK", $OK);
         $OK = $admin->hentKundeInfo($kunde->personnummer);
         $this->assertEquals("Feil", $OK);
-
     }
-
 }

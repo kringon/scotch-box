@@ -4,7 +4,7 @@ include_once '../DAL/bankDatabaseStubSqlite.php';
 include_once '../BLL/bankLogikk.php';
 /**
  * Created by PhpStorm.
- * User: T820082
+ * User: S163472
  * Date: 08.03.2016
  * Time: 22:10
  */

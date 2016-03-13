@@ -222,7 +222,6 @@ class DBStubSqlite extends PHPUnit_Extensions_Database_TestCase
     }
 
 
-
     function hentKundeInfo($personnummer)
     {
         $kunde = new kunde();

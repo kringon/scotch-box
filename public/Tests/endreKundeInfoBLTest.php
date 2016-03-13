@@ -3,22 +3,18 @@ include_once '../Model/domeneModell.php';
 include_once '../DAL/bankDatabaseStubSqlite.php';
 include_once '../BLL/bankLogikk.php';
 
-
 /**
  * Created by PhpStorm.
- * User: T820082
+ * User: S163472
  * Date: 09.03.2016
  * Time: 00:17
  */
 class endreKundeInfoBLTest extends PHPUnit_Framework_TestCase
 {
-
     public function testEndreGyldigKundeEttFelt()
     {
         //Arrange
         $bank = new Bank(new DBStubSqlite());
-
-
         $kunde = new kunde();
         $kunde->personnummer = "01010110523";
         $kunde->fornavn = "Lene";
@@ -28,7 +24,6 @@ class endreKundeInfoBLTest extends PHPUnit_Framework_TestCase
         $kunde->poststed = "Asker";
         $kunde->telefonnr = "22224444";
         $kunde->passord = "01010110523";
-
         //Act
         $kunde->etternavn = "Olsen";
         $OK = $bank->endreKundeInfo($kunde);
@@ -64,8 +59,6 @@ class endreKundeInfoBLTest extends PHPUnit_Framework_TestCase
     {
         //Arrange
         $bank = new Bank(new DBStubSqlite());
-
-
         $kunde = new kunde();
         $kunde->personnummer = "11122233312";
         $kunde->fornavn = "Ugyldig";
@@ -75,7 +68,6 @@ class endreKundeInfoBLTest extends PHPUnit_Framework_TestCase
         $kunde->poststed = "Asker";
         $kunde->telefonnr = "22224444";
         $kunde->passord = "11122233312";
-
         //Act
         $OK = $bank->hentKundeInfo($kunde->personnummer);
         $this->assertEquals("Feil", $OK);
@@ -83,12 +75,9 @@ class endreKundeInfoBLTest extends PHPUnit_Framework_TestCase
         $oppdatertKunde->fornavn = "Lina";
         $oppdatertKunde->etternavn = "Jonvik";
         $oppdatertKunde->adresse = "Slaskebakken 22";
-
         $OK = $bank->endreKundeInfo($oppdatertKunde);
         $this->assertEquals("OK", $OK);
         $OK = $bank->hentKundeInfo($kunde->personnummer);
         $this->assertEquals("Feil", $OK);
-
     }
-
 }

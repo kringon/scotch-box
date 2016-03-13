@@ -6,7 +6,7 @@ include_once '../BLL/bankLogikk.php';
 
 /**
  * Created by PhpStorm.
- * User: T820082
+ * User: S163472
  * Date: 08.03.2016
  * Time: 23:27
  */
