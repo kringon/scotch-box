@@ -44,5 +44,7 @@
     <logging>
         <log type="coverage-html" target="/var/www/public/test-report" lowUpperBound="35"
              highLowerBound="70"/>
+        <log type="junit" target="/var/www/public/test-report/logfile.xml" logIncompleteSkipped="false"/>
+        <log type="testdox-html" target="/var/www/public/test-report/testdox.html"/>
     </logging>
 </phpunit>
